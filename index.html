@@ -6,7 +6,7 @@
 
   <title>Newson Sportec Barcode Machine</title>
 
-  <!-- Barcode Library -->
+  <!-- Barcode Generator Library -->
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 
   <style>
@@ -21,47 +21,26 @@
       color: #1f2937;
     }
 
-    header {
-      background: linear-gradient(135deg, #050505, #1f2937);
-      color: white;
-      padding: 28px 40px;
+    /* TOP HERO IMAGE */
+    .hero {
+      width: 100%;
+      background: #050505;
+      text-align: center;
       border-bottom: 6px solid #9dff00;
     }
 
-    .header-content {
-      max-width: 1250px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      width: 260px;
-      max-width: 100%;
-      background: transparent;
-    }
-
-    .header-text h1 {
-      margin: 0;
-      font-size: 40px;
-      letter-spacing: 1px;
-      color: #ffffff;
-    }
-
-    .header-text p {
-      margin: 10px 0 0;
-      font-size: 18px;
-      color: #d1d5db;
-      line-height: 1.5;
+    .hero img {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
     }
 
     .company-bar {
       background: #111827;
       color: #d1d5db;
-      padding: 14px 40px;
-      font-size: 15px;
+      padding: 16px 40px;
+      font-size: 16px;
       text-align: center;
     }
 
@@ -98,7 +77,9 @@
       font-size: 15px;
     }
 
-    input, textarea, select {
+    input,
+    textarea,
+    select {
       width: 100%;
       margin-top: 7px;
       padding: 13px;
@@ -250,12 +231,8 @@
         grid-template-columns: 1fr;
       }
 
-      .header-text h1 {
-        font-size: 30px;
-      }
-
-      .logo {
-        width: 220px;
+      .hero img {
+        max-height: 360px;
       }
     }
 
@@ -264,7 +241,7 @@
         background: white;
       }
 
-      header,
+      .hero,
       .company-bar,
       .form-panel,
       .company-section,
@@ -302,26 +279,18 @@
 
 <body>
 
-  <header>
-    <div class="header-content">
-      <img src="logo.png" alt="Newson Sportec Logo" class="logo">
-
-      <div class="header-text">
-        <h1>Newson Sportec Barcode Machine</h1>
-        <p>
-          Create buyer, company, shipping, and warehouse barcode labels for internal business use.
-        </p>
-      </div>
-    </div>
-  </header>
+  <!-- TOP WEBSITE HEADER IMAGE -->
+  <section class="hero">
+    <img src="barcode-header.png" alt="Newson Sportec Barcode Machine Header">
+  </section>
 
   <div class="company-bar">
-    <strong>Newson Sportec</strong> | Ride. Build. Perform. | Internal Label & Barcode Generator
+    <strong>Newson Sportec</strong> | Ride. Build. Perform. | Internal Barcode Label Generator
   </div>
 
   <main class="container">
 
-    <!-- Left Form -->
+    <!-- LEFT FORM -->
     <section class="panel form-panel">
       <h2>Label Information</h2>
 
@@ -344,7 +313,7 @@
       </select>
 
       <label for="barcodeValue">Barcode Value / Customer ID</label>
-      <input type="text" id="barcodeValue" placeholder="Example: ABC-2026-0001" />
+      <input type="text" id="barcodeValue" placeholder="Example: NS-BUYER-0001" />
 
       <div class="buttons">
         <button class="generate" onclick="generateBarcode()">Generate Barcode</button>
@@ -353,19 +322,18 @@
       </div>
 
       <div class="note">
-        Tip: Use a short barcode ID, such as <strong>BUYER-0001</strong>,
-        <strong>PO-2026-001</strong>, or <strong>ABC-COMPANY-001</strong>.
-        A full address is usually too long for a simple barcode. For long addresses,
-        use a customer ID and keep the full information in Excel, Google Sheets, or your company system.
+        Tip: Use a short barcode ID, such as <strong>NS-BUYER-0001</strong>,
+        <strong>PO-2026-001</strong>, or <strong>NS-CUSTOMER-001</strong>.
+        A full address is usually too long for a simple barcode.
       </div>
     </section>
 
-    <!-- Right Preview -->
+    <!-- RIGHT PREVIEW -->
     <section class="panel">
       <h2>Live Barcode Preview</h2>
 
       <div class="label-preview">
-        <div class="label-card" id="labelCard">
+        <div class="label-card">
           <img src="logo.png" alt="Newson Sportec Logo" class="label-logo">
 
           <h3 id="previewLabelType">BUYER LABEL</h3>
@@ -385,7 +353,7 @@
 
   </main>
 
-  <!-- Company Information -->
+  <!-- COMPANY INFORMATION -->
   <section class="company-section">
     <div class="company-card">
       <h2>Company Information</h2>
@@ -400,13 +368,13 @@
       </p>
 
       <p>
-        <strong>Purpose of this website:</strong> This barcode machine helps coworkers create clear,
-        printable labels for buyers, company names, addresses, products, shipping documents, and warehouse records.
+        <strong>Purpose of this website:</strong> This barcode machine helps coworkers create printable
+        labels for buyers, company names, addresses, products, shipping documents, and warehouse records.
       </p>
 
       <p>
-        <strong>Internal Use Notice:</strong> This tool is designed for company testing, workflow improvement,
-        and internal label generation. Please confirm all buyer, shipping, and company information before printing.
+        <strong>Internal Use Notice:</strong> Please confirm all buyer, shipping, and company information
+        before printing labels.
       </p>
     </div>
   </section>
@@ -480,7 +448,7 @@
       document.getElementById("company").value = "ABC Trading LLC";
       document.getElementById("address").value = "123 Main Street, Fullerton, CA 92831, USA";
       document.getElementById("itemType").value = "Buyer Label";
-      document.getElementById("barcodeValue").value = "ABC-2026-0001";
+      document.getElementById("barcodeValue").value = "NS-BUYER-0001";
 
       generateBarcode();
     };
