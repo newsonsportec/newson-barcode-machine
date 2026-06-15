@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Newson Sportec Barcode Machine</title>
+
+  <!-- Barcode Library -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f5f7;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #050505, #1f2937);
+      color: white;
+      padding: 28px 40px;
+      border-bottom: 6px solid #9dff00;
+    }
+
+    .header-content {
+      max-width: 1250px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      width: 260px;
+      max-width: 100%;
+      background: transparent;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 40px;
+      letter-spacing: 1px;
+      color: #ffffff;
+    }
+
+    .header-text p {
+      margin: 10px 0 0;
+      font-size: 18px;
+      color: #d1d5db;
+      line-height: 1.5;
+    }
+
+    .company-bar {
+      background: #111827;
+      color: #d1d5db;
+      padding: 14px 40px;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .company-bar strong {
+      color: #9dff00;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 1250px;
+      margin: 35px auto;
+      padding: 0 24px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      font-size: 28px;
+      color: #111827;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      margin-top: 7px;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 14px 22px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .generate {
+      background: #16a34a;
+      color: white;
+    }
+
+    .print {
+      background: #2563eb;
+      color: white;
+    }
+
+    .clear {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .label-preview {
+      border: 2px dashed #9ca3af;
+      border-radius: 16px;
+      padding: 26px;
+      background: #ffffff;
+      min-height: 500px;
+    }
+
+    .label-card {
+      border: 2px solid #111827;
+      border-radius: 14px;
+      padding: 24px;
+      background: white;
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .label-logo {
+      width: 210px;
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .label-card h3 {
+      margin: 8px 0;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    .small-text {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 18px;
+    }
+
+    #barcode {
+      width: 100%;
+      max-width: 430px;
+      margin: 10px auto;
+    }
+
+    .info {
+      text-align: left;
+      margin-top: 20px;
+      line-height: 1.6;
+      font-size: 16px;
+      word-break: break-word;
+    }
+
+    .info strong {
+      color: #111827;
+    }
+
+    .note {
+      margin-top: 20px;
+      padding: 14px;
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .company-section {
+      max-width: 1250px;
+      margin: 0 auto 35px;
+      padding: 0 24px;
+    }
+
+    .company-card {
+      background: #111827;
+      color: white;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .company-card h2 {
+      margin-top: 0;
+      color: #9dff00;
+    }
+
+    .company-card p {
+      line-height: 1.7;
+      color: #e5e7eb;
+    }
+
+    footer {
+      background: #050505;
+      color: #d1d5db;
+      text-align: center;
+      padding: 28px 20px;
+      border-top: 5px solid #9dff00;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    footer strong {
+      color: #9dff00;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .header-text h1 {
+        font-size: 30px;
+      }
+
+      .logo {
+        width: 220px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header,
+      .company-bar,
+      .form-panel,
+      .company-section,
+      footer,
+      .note,
+      .buttons {
+        display: none;
+      }
+
+      .container {
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+
+      .panel {
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .panel h2 {
+        display: none;
+      }
+
+      .label-preview {
+        border: none;
+      }
+
+      .label-card {
+        margin: 30px auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-content">
+      <img src="logo.png" alt="Newson Sportec Logo" class="logo">
+
+      <div class="header-text">
+        <h1>Newson Sportec Barcode Machine</h1>
+        <p>
+          Create buyer, company, shipping, and warehouse barcode labels for internal business use.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="company-bar">
+    <strong>Newson Sportec</strong> | Ride. Build. Perform. | Internal Label & Barcode Generator
+  </div>
+
+  <main class="container">
+
+    <!-- Left Form -->
+    <section class="panel form-panel">
+      <h2>Label Information</h2>
+
+      <label for="buyer">Buyer Name</label>
+      <input type="text" id="buyer" placeholder="Example: John Smith" />
+
+      <label for="company">Company Name</label>
+      <input type="text" id="company" placeholder="Example: ABC Trading LLC" />
+
+      <label for="address">Company Address</label>
+      <textarea id="address" placeholder="Example: 123 Main Street, Fullerton, CA 92831, USA"></textarea>
+
+      <label for="itemType">Label Type</label>
+      <select id="itemType">
+        <option value="Buyer Label">Buyer Label</option>
+        <option value="Company Label">Company Label</option>
+        <option value="Shipping Label">Shipping Label</option>
+        <option value="Warehouse Label">Warehouse Label</option>
+        <option value="Product Label">Product Label</option>
+      </select>
+
+      <label for="barcodeValue">Barcode Value / Customer ID</label>
+      <input type="text" id="barcodeValue" placeholder="Example: ABC-2026-0001" />
+
+      <div class="buttons">
+        <button class="generate" onclick="generateBarcode()">Generate Barcode</button>
+        <button class="print" onclick="window.print()">Print Label</button>
+        <button class="clear" onclick="clearForm()">Clear</button>
+      </div>
+
+      <div class="note">
+        Tip: Use a short barcode ID, such as <strong>BUYER-0001</strong>,
+        <strong>PO-2026-001</strong>, or <strong>ABC-COMPANY-001</strong>.
+        A full address is usually too long for a simple barcode. For long addresses,
+        use a customer ID and keep the full information in Excel, Google Sheets, or your company system.
+      </div>
+    </section>
+
+    <!-- Right Preview -->
+    <section class="panel">
+      <h2>Live Barcode Preview</h2>
+
+      <div class="label-preview">
+        <div class="label-card" id="labelCard">
+          <img src="logo.png" alt="Newson Sportec Logo" class="label-logo">
+
+          <h3 id="previewLabelType">BUYER LABEL</h3>
+          <div class="small-text">Generated by Newson Sportec Barcode Machine</div>
+
+          <svg id="barcode"></svg>
+
+          <div class="info">
+            <p><strong>Buyer:</strong> <span id="previewBuyer">---</span></p>
+            <p><strong>Company:</strong> <span id="previewCompany">---</span></p>
+            <p><strong>Address:</strong> <span id="previewAddress">---</span></p>
+            <p><strong>Barcode ID:</strong> <span id="previewCode">---</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Company Information -->
+  <section class="company-section">
+    <div class="company-card">
+      <h2>Company Information</h2>
+
+      <p>
+        <strong>Company:</strong> Newson Sportec
+      </p>
+
+      <p>
+        <strong>Business Focus:</strong> Motorcycle, bicycle, wheel parts, performance components,
+        barcode labeling, warehouse organization, and customer order identification.
+      </p>
+
+      <p>
+        <strong>Purpose of this website:</strong> This barcode machine helps coworkers create clear,
+        printable labels for buyers, company names, addresses, products, shipping documents, and warehouse records.
+      </p>
+
+      <p>
+        <strong>Internal Use Notice:</strong> This tool is designed for company testing, workflow improvement,
+        and internal label generation. Please confirm all buyer, shipping, and company information before printing.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <strong>Copyright © 2026 Newson Sportec. All Rights Reserved.</strong>
+    </p>
+
+    <p>
+      The Newson Sportec logo, brand name, website design, barcode label format, text,
+      and visual materials are owned by or licensed to Newson Sportec.
+      Unauthorized copying, reproduction, redistribution, or commercial use is prohibited
+      without written permission from Newson Sportec.
+    </p>
+
+    <p>
+      This barcode machine is provided for internal testing and business label generation.
+      Users are responsible for verifying buyer names, company names, addresses, and barcode IDs before use.
+    </p>
+  </footer>
+
+  <script>
+    function generateBarcode() {
+      const buyer = document.getElementById("buyer").value.trim();
+      const company = document.getElementById("company").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const itemType = document.getElementById("itemType").value.trim();
+      const barcodeValue = document.getElementById("barcodeValue").value.trim();
+
+      if (!barcodeValue) {
+        alert("Please enter a Barcode Value / Customer ID.");
+        return;
+      }
+
+      document.getElementById("previewBuyer").textContent = buyer || "---";
+      document.getElementById("previewCompany").textContent = company || "---";
+      document.getElementById("previewAddress").textContent = address || "---";
+      document.getElementById("previewCode").textContent = barcodeValue;
+      document.getElementById("previewLabelType").textContent = itemType.toUpperCase();
+
+      JsBarcode("#barcode", barcodeValue, {
+        format: "CODE128",
+        lineColor: "#111827",
+        width: 2,
+        height: 90,
+        displayValue: true,
+        fontSize: 18,
+        margin: 10
+      });
+    }
+
+    function clearForm() {
+      document.getElementById("buyer").value = "";
+      document.getElementById("company").value = "";
+      document.getElementById("address").value = "";
+      document.getElementById("itemType").value = "Buyer Label";
+      document.getElementById("barcodeValue").value = "";
+
+      document.getElementById("previewBuyer").textContent = "---";
+      document.getElementById("previewCompany").textContent = "---";
+      document.getElementById("previewAddress").textContent = "---";
+      document.getElementById("previewCode").textContent = "---";
+      document.getElementById("previewLabelType").textContent = "BUYER LABEL";
+
+      document.getElementById("barcode").innerHTML = "";
+    }
+
+    window.onload = function () {
+      document.getElementById("buyer").value = "John Smith";
+      document.getElementById("company").value = "ABC Trading LLC";
+      document.getElementById("address").value = "123 Main Street, Fullerton, CA 92831, USA";
+      document.getElementById("itemType").value = "Buyer Label";
+      document.getElementById("barcodeValue").value = "ABC-2026-0001";
+
+      generateBarcode();
+    };
+  </script>
+
+</body>
+</html>
